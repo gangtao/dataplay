@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Data Play</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Gang Tao">
+
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap-select.min.css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+      body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+          float: center;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="modal fade" id="data_select_modal" tabindex="-1" role="dialog" aria-labelledby="downloadPanel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Select Data</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12" id="data_select_panel" ></div>
+            </div>           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="data_upload_modal" tabindex="-1" role="dialog" aria-labelledby="uploadPanel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Upload Data</h4>
+          </div>
+          <form role="form" action="/data" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12" id="data_upload_panel" >
+                    <div class="form-group">
+                      <input type="file" name="file">
+                      <p>%s</p>
+                    </div>
+                </div>
+              </div>            
+            </div>
+            <div class="modal-footer"> 
+              <button type="submit" class="btn btn-default" value="Upload">Upload</button> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Data Play</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  Data
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <li role="presentation"><a role="menuitem" class="data_select_menu" id="menu_select_data" tabindex="-1" href="#">Select CSV Dataset</a></li>
+                  <li role="presentation"><a role="menuitem" class="data_select_menu" id="menu_select_r_data" tabindex="-1" href="#">Select R Sample Dataset</a></li>
+                  <li role="presentation"><a role="menuitem" id="menu_add_data" tabindex="-1" href="#">Add CSV Dataset</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown">
+                Analysis
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation"><a role="menuitem" id="menu_visualization" tabindex="-1" href="#">Visulaization</a></li>
+                <li role="presentation"><a role="menuitem" id="menu_machine_learning" tabindex="-1" href="#">Machine Learning</a></li>
+              </ul>
+            </li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <div data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  Dataset
+                </div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body" style="height:300px; overflow:auto" id="table-panel">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-default" style="height:500px; overflow:auto">
+            <div class="panel-heading">Control</div>
+            <div class="panel-body" id="control-body">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="panel panel-default" style="height:500px; overflow:auto">
+            <div class="panel-heading">Visualization</div>
+            <div class="panel-body" id="viz-panel">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <hr>
+    
+    <div class="footer">
+      <div class="container">
+        <p>DATA is fun.</p>
+      </div>
+    </div>
+
+    <script type='text/javascript'></script>
+    <script type="text/javascript" src="./libs/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="./libs/d3.min.js"></script>
+    <script type="text/javascript" src="./libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./libs/json2.js"></script>
+    <script type="text/javascript" src="./libs/underscore.js"></script>
+    <script type="text/javascript" src="./libs/backbone.js"></script>
+    <script type="text/javascript" src="./libs/babyparse.js"></script>
+    <script type="text/javascript" src="./libs/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+  </body>
+</html>
