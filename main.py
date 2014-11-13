@@ -60,8 +60,7 @@ def getrdata(dataname):
 @app.route('/viz', methods=['POST'])
 def visualize():
     print request.form
-    print len(request.form)
-    vizbuilder = Builder(None, None)
+    vizbuilder = Builder(request.form)
     result = vizbuilder.build()
     return jsonify(src=result)
 

@@ -1,3 +1,7 @@
+'''
+provide sample dataset from R, return as csv str
+'''
+
 from rpy2 import robjects
 from rpy2.robjects import Formula, Environment
 from rpy2.robjects.vectors import IntVector, FloatVector
@@ -47,7 +51,7 @@ class SampleData(object):
       counter = 0
       header_appended = False
       for row in data.iter_row():
-        rowheader = "_name" + SEPERATOR + SEPERATOR.join(row.names)
+        rowheader = "" + SEPERATOR + SEPERATOR.join(row.names)
         rowvalue = names[counter] + SEPERATOR + SEPERATOR.join([str(i[0]) for i in row])
         counter = counter + 1
         if not header_appended:
